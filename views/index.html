@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-light">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="copyright"
+      content="Calc App is a registered trademark of John Jenyo. Copyright &amp;copy; 2020, All rights reserved"
+    />
+    <meta
+      name="description"
+      content="Calc App is a web application for carrying out basic calculations"
+    />
+    <meta name="keywords" content="Calculator, web application, basic" />
+    <!-- <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" /> -->
+    <title>Calculator App</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+      async
+    ></script>
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <input type="checkbox" id="checkbox" />
+        <label for="checkbox" id="checkbox-label"
+          ><i class="fas fa-bars"></i
+        ></label>
+        <ul>
+          <li><a href="#" id="theme1" class="">Theme 1</a></li>
+          <li><a href="#" id="theme2" class="">Theme 2</a></li>
+        </ul>
+      </nav>
+    </header>
+    <table id="table" cellspacing="0">
+      <tr>
+        <td colspan="4">
+          <div class="screen" id="screen">
+            <span class="innerScreen" id="output"></span>
+          </div>
+        </td>
+        <!-- <td colspan="4" rowspan="2"><input type="text" id="edu" /></td> -->
+        <!-- clr() function will call clr to clear all value -->
+      </tr>
+      <tr></tr>
+      <tr>
+        <td>
+          <input
+            type="button"
+            value="AC"
+            onclick="clr()"
+            class="key secondary"
+            id="key-AC"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="±"
+            onclick="display('&plusmn;')"
+            class="key secondary"
+            id="key-plusmn"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="%"
+            onclick="display('%')"
+            class="key secondary"
+            id="key-mod"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="÷"
+            onclick="display('/')"
+            class="key accent"
+            id="key-divide"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <!-- creating buttons and assigning values-->
+        <td>
+          <input
+            type="button"
+            value="7"
+            onclick="display('7')"
+            class="key button"
+            id="key7"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="8"
+            onclick="display('8')"
+            class="key button"
+            id="key-8"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="9"
+            onclick="display('9')"
+            class="key button"
+            id="key-9"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="*"
+            onclick="display('*')"
+            class="key accent"
+            id="key-mult"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="button"
+            value="4"
+            onclick="display('4')"
+            class="key button"
+            id="key-4"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="5"
+            onclick="display('5')"
+            class="key button"
+            id="key-5"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="6"
+            onclick="display('6')"
+            class="key button"
+            id="key-6"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="-"
+            onclick="display('-')"
+            class="key accent"
+            id="key-minus"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="button"
+            value="1"
+            onclick="display('1')"
+            class="key button"
+            id="key-1"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="2"
+            onclick="display('2')"
+            class="key button"
+            id="key-2"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="3"
+            onclick="display('3')"
+            class="key button"
+            id="key-3"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="+"
+            onclick="display('+')"
+            class="key accent"
+            id="key-plus"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input
+            id="btn-0"
+            type="button"
+            value="0"
+            onclick="display('0')"
+            class="key button"
+            id="key-0"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            value="."
+            onclick="display('.')"
+            class="key button"
+            id="key-dot"
+          />
+        </td>
+        <!-- calculates result using eval-->
+        <td>
+          <input
+            type="button"
+            value="="
+            onclick="calculate()"
+            class="key accent"
+            id="key-eval"
+          />
+        </td>
+      </tr>
+    </table>
+    <script>
+      //Switch theme
+      theme1 = document.getElementById("theme1");
+      theme2 = document.getElementById("theme2");
+      theme1.addEventListener("click", toggleTheme);
+      theme2.addEventListener("click", toggleTheme);
+
+      // Set theme
+      function setTheme(themeName) {
+        localStorage.setItem("theme", themeName);
+        document.documentElement.className = themeName;
+      }
+
+      // function to toggle between light and dark theme
+      function toggleTheme(e) {
+        if (e.target.id === "theme1") {
+          if (localStorage.getItem("theme") === "theme-light") {
+            // setTheme("theme-light");
+          } else {
+            setTheme("theme-light");
+          }
+          theme2.setAttribute("class", "");
+          theme1.setAttribute("class", "active");
+          return false;
+        } else {
+          if (localStorage.getItem("theme") === "theme-dark") {
+            // setTheme("theme-light");
+          } else {
+            setTheme("theme-dark");
+          }
+        }
+        theme1.setAttribute("class", "");
+        theme2.setAttribute("class", "active");
+        return false;
+      }
+
+      // Immediately invoked function to set the theme on initial load
+      (function () {
+        if (localStorage.getItem("theme") === "theme-dark") {
+          setTheme("theme-dark");
+          theme2.setAttribute("class", "active");
+        } else {
+          setTheme("theme-light");
+
+          theme1.setAttribute("class", "active");
+        }
+      })();
+
+      //
+      //function for displaying values
+      function display(val) {
+        document.getElementById("output").innerHTML += val;
+      }
+      //function for evaluation
+      function calculate() {
+        let x = document.getElementById("output").innerHTML;
+
+        //The readInput function takes x as input and returns the result of computation in y
+        //y is then displayed on the screen
+        //let result = readInput(x)
+        //Output
+
+        showResult(eval(x));
+        // document.getElementById("output").innerHTML = y;
+      }
+      function showResult(result) {
+        document.getElementById("output").innerHTML = result;
+      }
+      //function for clearing the screen
+      function clr() {
+        document.getElementById("output").innerHTML = "";
+      }
+
+      // Set eventhandler readInput on each calculator button
+      // readInput can then use event.target.id to get the key
+      // value and determine the input
+      const calcKeys = document.getElementsByClassName("key");
+      try {
+        Array.from(calcKeys).forEach((key) =>
+          key.addEventListener("click", readInput)
+        );
+      } catch (e) {
+        console.clear();
+      }
+    </script>
+  </body>
+</html>
