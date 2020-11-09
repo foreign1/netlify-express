@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   res.write("<h1>Hello from Express.js!</h1>");
   res.end();
 });
-router.get("/index", (req, res) => {
+router.get("/calculator", (req, res) => {
   res.writeHead(200, { "Content-Type": "text/html" });
   res.sendFile(__dirname + "/views/index.html");
   res.end();
